@@ -1,13 +1,21 @@
 import React from 'react';
 
-function TodoItem() {
-    const { item, removeTodo, toggleTodo, editContent } = this.props;
-    return(
-        <li>
-            <input type="checkbox" onClick={ toggleTodo} /> 
-            <span onFocus={editContent} className="single-line" contentEditable={true}> 1{item} </span>
-            <button onclick={removeTodo} className="del">✖️</button>
-        </li>
-    )
+class TodoItem extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state={
+            editatble: true
+        }
+    }
+    render() {
+        const { text, removeTodo, toggleTodo, editContent } = this.props;
+        return(
+            <li>
+                <input type="checkbox" onClick={ toggleTodo} /> 
+                <span onFocus={editContent} > {text} </span>
+                <button onClick={removeTodo} >✖️</button>
+            </li>
+        )
+    }
 }
 export default TodoItem
