@@ -8,12 +8,12 @@ class TodoItem extends React.Component{
         }
     }
     render() {
-        const { text, removeTodo, toggleTodo, editContent } = this.props;
+        const { text, id } = this.props;
         return(
-            <li>
-                <input type="checkbox" onClick={ toggleTodo} /> 
-                <span onFocus={editContent} > {text} </span>
-                <button onClick={removeTodo} >✖️</button>
+            <li className={this.props.completed?"finished":''}>
+                <input type="checkbox" defaultChecked={this.props.completed}  onChange={this.props.toggleTodo} /> 
+                <span onFocus={this.props.editContent} className={id}> {text} </span>
+                <button onClick={this.props.removeTodo} >✖️</button>
             </li>
         )
     }
