@@ -26,15 +26,46 @@ class TodoList extends React.Component{
         this.setState({
             todos: [...this.state.todos, newTodo]
         })
+        this.postTodoInServer(newTodo)
+    }
+
+    postTodoInServer = (newTodo) => {
+        fetch(`http://localhost:3001/todos`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newTodo),
+        })
+        .then(res => res.json())
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     removeTodo = (id) => {
         this.setState({
             todos: this.state.todos.filter(todo => todo.id !== id),
         })
+        this.removeTodoInServer(id);
+    }
+
+    removeTodoInServer = (id) => {
         fetch(`http://localhost:3001/todos/${id}` , {
             method: 'DELETE'
-          })
+        })
+    }
+
+    updatedTodoInServer = (id, updatedTodo) => {
+        fetch(`http://localhost:3001/todos/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedTodo),
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
     }
 
     toggleTodo = (id) => {
@@ -47,38 +78,48 @@ class TodoList extends React.Component{
             })
         });
         const todo = this.state.todos.filter(todo => todo.id === id);
-        const updatedTodo = {
-            completed: !todo.completed
+        // const updatedTodo = {
+        //     completed: todo.completed!==true
+        // }
+        // console.log(updatedTodo,"updated----------")
+        if (todo["completed"]===true) {
+            this.updatedTodoInServer(id,{completed:true})
+        } else {
+            this.updatedTodoInServer(id,{completed:false})
         }
-        fetch(`http://localhost:3001/todos/${id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedTodo),
-        })
-        .then(res => res.json())
+        // this.updatedTodoInServer(id,updatedTodo) 
     }
 
-render() {
-    const todos = this.state.todos;
-    return(
-       <div> 
-           <AddTodo addTodo={this.addTodo} />
-           <ul>
-           {todos.map(todo => (
-               <TodoItem 
-                   key={todo.id} 
-                   id={todo.id}
-                   text={todo.text} 
-                   completed={todo.completed}
-                   removeTodo={this.removeTodo.bind(this,todo.id)}
-                   toggleTodo={this.toggleTodo.bind(this,todo.id)}
-                   editContent={this.editContent}
-               />
-           ))}
-           </ul>
-       </div>
+    editContent = (id, newText) => {
+        this.updatedTodoInServer(id,{text: newText})
+    }
+
+    clearAll = () => {
+        this.state.todos.map(item => item.id).forEach(id => this.removeTodoInServer(id));
+        this.setState({
+            todos: [],
+        })
+    }
+
+    render() {
+        const todos = this.state.todos;
+        return(
+           <div> 
+                 <AddTodo addTodo={this.addTodo} clearAll={this.clearAll} />
+                 <ul className={"todo-list"}>
+                     {todos.map(todo => (
+                     <TodoItem 
+                        key={todo.id} 
+                        id={todo.id}
+                        text={todo.text} 
+                        completed={todo.completed}
+                        removeTodo={() => this.removeTodo(todo.id)}
+                        toggleTodo={() => this.toggleTodo(todo.id)}
+                        editContent={this.editContent.bind(this)}
+                     />
+                     ))}
+                 </ul>
+           </div>
    )
 }
 }

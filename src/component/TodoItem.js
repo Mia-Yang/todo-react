@@ -1,19 +1,21 @@
 import React from 'react';
+import EditableText from './EditableText'
 
 class TodoItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            editatble: true
+            value: props.text
         }
     }
     render() {
-        const { text, id } = this.props;
+        const { text,id } = this.props;
         return(
             <li className={this.props.completed?"finished":''}>
-                <input type="checkbox" defaultChecked={this.props.completed}  onChange={this.props.toggleTodo} /> 
-                <span onFocus={this.props.editContent} className={id}> {text} </span>
-                <button onClick={this.props.removeTodo} >✖️</button>
+                <input type="checkbox" checked={this.props.completed}  onChange={this.props.toggleTodo} /> 
+                <EditableText type={text} value={text} editContent={this.props.editContent} id={id}/>
+                {/* <span contentEditable onBlur={this.props.editContent} value={this.state.value}> {text} </span> */}
+                <button onClick={this.props.removeTodo} className={"del"}>✖️</button>
             </li>
         )
     }

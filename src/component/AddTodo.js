@@ -1,5 +1,4 @@
 import React from 'react'
-import TodoHeader from './TodoHeader'
 
 class AddTodo extends React.Component {
     constructor(props) {
@@ -15,45 +14,26 @@ class AddTodo extends React.Component {
         })
     }
 
-
     handleSubmit = (e) => {
         e.preventDefault();
-
-        // 添加进json-server
+        if (this.state.text.length === 0) {
+            return
+        }
         const newTodo = {
             id: new Date().getTime(),
             text: this.state.text,
             completed: false,
         }
 
-        fetch(`http://localhost:3001/todos`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newTodo),
-        })
-        .then(res => res.json())
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-
         this.props.addTodo(newTodo);
         this.setState({
             text: '',
         })
     }
-    
-    handleClearAll = () => {
-        //清空json-server
-        //清空state
-
-    }
 
     render(){
         return(
             <div>
-                <TodoHeader />
                 <form onSubmit={this.handleSubmit}>
                 <input
                    type="text"
@@ -61,9 +41,9 @@ class AddTodo extends React.Component {
                    onChange={this.handleInput}
                    value={this.state.text}
                 />
-                    <button>➕</button>
+                    <button className={"add-btn"}>➕</button>
                 </form>
-                <button onClick={this.handleClearAll}>Clear All</button>
+                <button onClick={this.props.clearAll} className={"clear"}>Clear All</button>
             </div>
         )
     }
