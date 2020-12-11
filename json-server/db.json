@@ -1,0 +1,24 @@
+{
+  "todos": [
+    {
+      "id": 1607665417674,
+      "text": "打扫卫生",
+      "completed": true
+    },
+    {
+      "id": 1607665418007,
+      "text": "买隐形眼镜",
+      "completed": false
+    },
+    {
+      "id": 1607665418375,
+      "text": "给家人打电话",
+      "completed": false
+    },
+    {
+      "id": 1607665418864,
+      "text": "写作业",
+      "completed": false
+    }
+  ]
+}

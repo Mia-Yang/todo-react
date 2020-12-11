@@ -1,52 +1,54 @@
 import React from 'react'
 
 class AddTodo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state={
-            text: '',
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      text: '',
+    }
+  }
+
+  handleInput = (e) => {
+    this.setState({
+      text: e.target.value,
+    })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault()
+    if (this.state.text.length === 0) {
+      return
+    }
+    const newTodo = {
+      id: new Date().getTime(),
+      text: this.state.text,
+      completed: false,
     }
 
-    handleInput = (e) => {
-        this.setState({
-            text: e.target.value,
-        })
-    }
+    this.props.addTodo(newTodo)
+    this.setState({
+      text: '',
+    })
+  }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        if (this.state.text.length === 0) {
-            return
-        }
-        const newTodo = {
-            id: new Date().getTime(),
-            text: this.state.text,
-            completed: false,
-        }
-
-        this.props.addTodo(newTodo);
-        this.setState({
-            text: '',
-        })
-    }
-
-    render(){
-        return(
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                <input
-                   type="text"
-                   placeholder="Plan your life"
-                   onChange={this.handleInput}
-                   value={this.state.text}
-                />
-                    <button className={"add-btn"}>➕</button>
-                </form>
-                <button onClick={this.props.clearAll} className={"clear"}>Clear All</button>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            placeholder="Plan your life"
+            onChange={this.handleInput}
+            value={this.state.text}
+          />
+          <button className={'add-btn'}>➕</button>
+        </form>
+        <button onClick={this.props.clearAll} className={'clear'}>
+          Clear All
+        </button>
+      </div>
+    )
+  }
 }
 
-export default AddTodo;
+export default AddTodo
