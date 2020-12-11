@@ -82,11 +82,6 @@ span {
   overflow: scroll;
 }
 
-span input[type="text"] {
-  height: 25px;
-  font-size: 16px;
-}
-
 .editBox {
   width: 100%;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class EditableText extends React.Component{
+class EditableTodoSpan extends React.Component{
     constructor(props){
       super(props)
       this.state = {
@@ -48,4 +48,4 @@ class EditableText extends React.Component{
     }
   }
 
-  export default EditableText
+  export default EditableTodoSpan

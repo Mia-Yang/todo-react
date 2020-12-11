@@ -65,7 +65,7 @@ class TodoList extends React.Component{
             body: JSON.stringify(updatedTodo),
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => console.log(data,"updated"))
     }
 
     toggleTodo = (id) => {
@@ -77,17 +77,11 @@ class TodoList extends React.Component{
                 return todo;
             })
         });
-        const todo = this.state.todos.filter(todo => todo.id === id);
-        // const updatedTodo = {
-        //     completed: todo.completed!==true
-        // }
-        // console.log(updatedTodo,"updated----------")
-        if (todo["completed"]===true) {
-            this.updatedTodoInServer(id,{completed:true})
-        } else {
-            this.updatedTodoInServer(id,{completed:false})
+        const todo = this.state.todos.filter(todo => todo.id === id)[0];
+        const updatedTodo = {
+            completed: todo.completed
         }
-        // this.updatedTodoInServer(id,updatedTodo) 
+        this.updatedTodoInServer(id,updatedTodo) 
     }
 
     editContent = (id, newText) => {
@@ -114,7 +108,7 @@ class TodoList extends React.Component{
                         text={todo.text} 
                         completed={todo.completed}
                         removeTodo={() => this.removeTodo(todo.id)}
-                        toggleTodo={() => this.toggleTodo(todo.id)}
+                        toggleTodo={this.toggleTodo.bind(this,todo.id)}
                         editContent={this.editContent.bind(this)}
                      />
                      ))}
