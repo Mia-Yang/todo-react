@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should take a snapshot 1`] = `
+<DocumentFragment>
+  <main>
+    <header>
+      <h1>
+        Todos
+      </h1>
+    </header>
+    <div>
+      <div>
+        <form>
+          <input
+            data-testid="inputbox"
+            placeholder="Plan your life"
+            type="text"
+            value=""
+          />
+          <button
+            class="add-btn"
+            data-testid="addTodoButton"
+          >
+            ➕
+          </button>
+        </form>
+        <button
+          class="clear"
+          data-testid="clearButton"
+        >
+          Clear All
+        </button>
+      </div>
+      <ul
+        class="todo-list"
+      />
+    </div>
+  </main>
+</DocumentFragment>
+`;

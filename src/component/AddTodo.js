@@ -40,10 +40,17 @@ class AddTodo extends React.Component {
             placeholder="Plan your life"
             onChange={this.handleInput}
             value={this.state.text}
+            data-testid="inputbox"
           />
-          <button className={'add-btn'}>➕</button>
+          <button className={'add-btn'} data-testid="addTodoButton">
+            ➕
+          </button>
         </form>
-        <button onClick={this.props.clearAll} className={'clear'}>
+        <button
+          onClick={this.props.clearAll}
+          className={'clear'}
+          data-testid="clearButton"
+        >
           Clear All
         </button>
       </div>
